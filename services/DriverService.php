@@ -20,8 +20,9 @@ class DriverService
 
         return Yii::$app->getDb()->createCommand("
             SELECT drivers.*,
+            TIMESTAMPDIFF(YEAR, drivers.date_of_birth, CURDATE()) age,
             {$distanceInKm} / c.max_average_speed / " . self::MAX_HOURS_FOR_DAY . " days, 
-            CEIL({$distanceInKm} / c.max_average_speed / " . self::MAX_HOURS_FOR_DAY . ") days_for_human
+            CEIL({$distanceInKm} / c.max_average_speed / " . self::MAX_HOURS_FOR_DAY . ") travel_time
             FROM drivers
                      INNER JOIN `buses_drivers` ON `drivers`.`id` = `buses_drivers`.`drivers_id`
                      INNER JOIN `buses` ON `buses_drivers`.`buses_id` = `buses`.`id`

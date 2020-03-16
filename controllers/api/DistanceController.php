@@ -60,8 +60,6 @@ class DistanceController extends Controller
         $request = Yii::$app->request;
         $from = (string)$request->get('from');
         $to = (string)$request->get('to');
-        $page = (int)$request->get('page', 1) || 1;
-        $limit = 20;
 
         if (!$from || !$to) {
             throw new BadRequestHttpException('Params "from" and "to" are required!', 401);
@@ -76,6 +74,6 @@ class DistanceController extends Controller
             ];
         }
 
-        return $this->service->getDriverDaysForDistance($distance, $page, $limit, $driver);
+        return $this->service->getDriverDaysForDistance($distance, 1, 1, $driver)[0];
     }
 }
